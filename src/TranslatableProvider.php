@@ -14,6 +14,10 @@ class TranslatableProvider extends ServiceProvider
     {
         $this->app->register(ViewComposerProvider::class);
         $this->app->register(TranslatableServiceProvider::class);
+
+        $this->publishes([
+            __DIR__.'/../install-stubs/config/translatable.php' => config_path('translatable.php'),
+        ], 'config');
     }
 
     /**
