@@ -1,4 +1,4 @@
-<?php namespace Brackets\Translatable;
+<?php namespace Brackets\Translatable\Providers;
 
 use Brackets\Translatable\ViewComposers\TranslatableComposer;
 use Illuminate\Support\ServiceProvider;

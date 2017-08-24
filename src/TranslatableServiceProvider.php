@@ -1,35 +1,41 @@
-<?php
+<?php namespace Brackets\Translatable;
 
-namespace Brackets\Translatable;
-
+use Brackets\Translatable\Facades\Translatable;
 use Illuminate\Support\ServiceProvider;
+use Brackets\Translatable\Providers\ViewComposerProvider;
+use Brackets\Translatable\Providers\TranslatableProvider;
 
 class TranslatableServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
+     * Bootstrap any application services.
      *
-     * @var bool
+     * @return void
      */
-    protected $defer = true;
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../install-stubs/config/translatable.php' => config_path('translatable.php'),
+            ], 'config');
+        }
+
+        $this->app->register(ViewComposerProvider::class);
+        $this->app->register(TranslatableProvider::class);
+    }
 
     /**
-     * Register the service provider.
+     * Register any application services.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton('translatable', Translatable::class);
-    }
+        $this->mergeConfigFrom(
+            __DIR__.'/../install-stubs/config/translatable.php', 'translatable'
+        );
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['translatable'];
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Translatable', Translatable::class);
     }
 }
