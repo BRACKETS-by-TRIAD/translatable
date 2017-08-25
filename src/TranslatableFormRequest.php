@@ -1,12 +1,18 @@
 <?php namespace Brackets\Translatable;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Validation\Rule;
 
 class TranslatableFormRequest extends FormRequest {
 
-    public function getLocales()
+    /**
+     * Get all defined locales as Collection
+     *
+     * @return Collection
+     */
+    public function getLocales() : Collection
     {
         return collect((array) Config::get('translatable.locales'))->map(function($val, $key){
             return is_array($val) ? $key : $val;
@@ -14,15 +20,27 @@ class TranslatableFormRequest extends FormRequest {
 
     }
 
-    public function getRequiredLocales()
+    /**
+     * Define what locales should be required in store/update requests
+     *
+     * By default all locales are required
+     *
+     * @return Collection
+     */
+    public function defineRequiredLocales() : Collection
+    {
+        return $this->getLocales();
+    }
+
+    private function prepareLocalesForRules()
     {
         $locales = $this->getLocales();
+        $required = $this->defineRequiredLocales();
 
-        // let's make only default language required and make all others optional (feel free to delete if it's your case)
-        return $locales->map(function($locale) use ($locales) {
+        return $locales->map(function($locale) use ($locales, $required) {
             return [
                 'locale' => $locale,
-                'required' => $locale === $locales->first(),
+                'required' => $required->has($locale)
             ];
         });
     }
@@ -31,7 +49,7 @@ class TranslatableFormRequest extends FormRequest {
     {
         $standardRules = collect($this->untranslatableRules());
 
-        $rules = $this->getRequiredLocales()->flatMap(function($locale){
+        $rules = $this->prepareLocalesForRules()->flatMap(function($locale){
             return collect($this->translatableRules($locale['locale']))->mapWithKeys(function($rule, $ruleKey) use ($locale) {
                 //TODO refactor
                 if(!$locale['required']) {
