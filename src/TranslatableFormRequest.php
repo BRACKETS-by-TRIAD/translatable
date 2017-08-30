@@ -40,7 +40,7 @@ class TranslatableFormRequest extends FormRequest {
         return $locales->map(function($locale) use ($locales, $required) {
             return [
                 'locale' => $locale,
-                'required' => $required->has($locale)
+                'required' => $required->contains($locale)
             ];
         });
     }
@@ -51,9 +51,8 @@ class TranslatableFormRequest extends FormRequest {
 
         $rules = $this->prepareLocalesForRules()->flatMap(function($locale){
             return collect($this->translatableRules($locale['locale']))->mapWithKeys(function($rule, $ruleKey) use ($locale) {
-                //TODO refactor
-                if(!$locale['required']) {
-                    if(is_array($rule) && ($key = array_search('required', $rule)) !== false) {
+                if (!$locale['required']) {
+                    if (is_array($rule) && ($key = array_search('required', $rule)) !== false) {
                         unset($rule[$key]);
                         array_push($rule, 'nullable');
                     } else if(is_string($rule)) {
