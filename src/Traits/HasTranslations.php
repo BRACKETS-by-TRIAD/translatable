@@ -11,6 +11,7 @@ trait HasTranslations
     use ParentHasTranslations;
 
     protected $locale;
+
     /**
      * @param string $key
      *
@@ -43,9 +44,14 @@ trait HasTranslations
         return $array;
     }
 
+    public function toArrayAllLocales()
+    {
+        return parent::toArray();
+    }
+
     public function toJsonAllLocales($options = 0)
     {
-        $json = json_encode(parent::toArray(), $options);
+        $json = json_encode($this->toArrayAllLocales(), $options);
 
         if (JSON_ERROR_NONE !== json_last_error()) {
             throw JsonEncodingException::forModel($this, json_last_error_msg());

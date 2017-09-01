@@ -11,7 +11,7 @@ abstract class TestCase extends Orchestra
 {
 
     /**
-     * @var Model|HasTranslations
+     * @var TestModel
      */
     protected $testModel;
 
@@ -71,7 +71,7 @@ abstract class TestCase extends Orchestra
                 'de' => 'DE Name',
                 'fr' => 'FR Name',
             ],
-            'regular_name' => 'Regular name'
+            'regular_name' => 'Regular Name'
         ]);
     }
 }
