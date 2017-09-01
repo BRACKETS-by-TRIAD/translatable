@@ -1,8 +1,7 @@
 <?php namespace Brackets\Translatable\ViewComposers;
 
+use Brackets\Translatable\Facades\Translatable;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
 
 class TranslatableComposer
 {
@@ -14,13 +13,6 @@ class TranslatableComposer
      */
     public function compose(View $view)
     {
-        $view->with('locales', $this->getLocales());
-    }
-
-    protected function getLocales()
-    {
-        return collect((array) Config::get('translatable.locales'))->map(function($val, $key){
-            return is_array($val) ? $key : $val;
-        });
+        $view->with('locales', Translatable::getLocales());
     }
 }

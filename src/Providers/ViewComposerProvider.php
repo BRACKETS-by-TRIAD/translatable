@@ -1,6 +1,7 @@
 <?php namespace Brackets\Translatable\Providers;
 
 use Brackets\Translatable\ViewComposers\TranslatableComposer;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class ViewComposerProvider extends ServiceProvider
@@ -12,7 +13,7 @@ class ViewComposerProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(
+        View::composer(
             'admin.*', TranslatableComposer::class
         );
     }
