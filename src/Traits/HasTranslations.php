@@ -13,8 +13,9 @@ trait HasTranslations
     protected $locale;
 
     /**
-     * @param string $key
+     * Get an attribute from the model.
      *
+     * @param  string  $key
      * @return mixed
      */
     public function getAttributeValue($key)
@@ -26,15 +27,34 @@ trait HasTranslations
         return $this->getTranslation($key, $this->getLocale());
     }
 
+    /**
+     * Set the locale of the model
+     *
+     * This locale would be used when working with translated attributes
+     *
+     * @param $locale
+     */
     public function setLocale($locale) {
         $this->locale = $locale;
     }
 
+    /**
+     * Get current locale of the model
+     *
+     * @return string
+     */
     public function getLocale()
     {
         return !is_null($this->locale) ? $this->locale : App::getLocale();
     }
 
+    /**
+     * Convert the model instance to an array.
+     *
+     * By default, translations of only current locale of the model of each translated attribute is returned
+     *
+     * @return array
+     */
     public function toArray()
     {
         $array = parent::toArray();
@@ -44,11 +64,42 @@ trait HasTranslations
         return $array;
     }
 
+    /**
+     * Convert the model instance to an array.
+     *
+     * Translated columns are returned as arrays.
+     *
+     * @return array
+     */
     public function toArrayAllLocales()
     {
         return parent::toArray();
     }
 
+    /**
+     * Convert the model instance to JSON.
+     *
+     * By default, translations of only current locale of the model of each translated attribute is returned
+     *
+     * @param  int  $options
+     * @return string
+     *
+     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
+     */
+    public function toJson($options = 0) {
+        return parent::toJson($options);
+    }
+
+    /**
+     * Convert the model instance to JSON.
+     *
+     * Translated columns are returned as arrays.
+     *
+     * @param  int  $options
+     * @return string
+     *
+     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
+     */
     public function toJsonAllLocales($options = 0)
     {
         $json = json_encode($this->toArrayAllLocales(), $options);
