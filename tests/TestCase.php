@@ -2,8 +2,6 @@
 
 namespace Brackets\Translatable\Test;
 
-use Brackets\Translatable\Traits\HasTranslations;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -15,6 +13,16 @@ abstract class TestCase extends Orchestra
      */
     protected $testModel;
 
+    /**
+     * @var TestRequest
+     */
+    protected $testRequest;
+
+    /**
+     * @var TestRequest
+     */
+    protected $testRequestWithRequiredLocales;
+
     public function setUp()
     {
         parent::setUp();
@@ -22,6 +30,8 @@ abstract class TestCase extends Orchestra
         $this->setUpDatabase($this->app);
 
         $this->testModel = TestModel::first();
+        $this->testRequest = new TestRequest;
+        $this->testRequestWithRequiredLocales = new TestRequestWithRequiredLocales;
 
     }
 

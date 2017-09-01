@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
+use Brackets\Translatable\Facades\Translatable;
 
 class TranslatableFormRequest extends FormRequest {
 
@@ -45,18 +46,18 @@ class TranslatableFormRequest extends FormRequest {
                         $rule = str_replace('required', 'nullable', $rule);
                     }
                 }
-                return [$ruleKey.'.'.$locale['locale'] => $rule];
+                return [$ruleKey.'.'.$locale['locale'] => array_values($rule)];
             });
         })->merge($standardRules);
 
         return $rules->toArray();
     }
 
-    public function untranslatableRules() : array {
+    public function untranslatableRules() {
         return [];
     }
 
-    public function translatableRules(string $locale) : array {
+    public function translatableRules($locale) {
         return [];
     }
 
