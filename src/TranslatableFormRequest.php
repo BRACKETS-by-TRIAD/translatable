@@ -46,7 +46,7 @@ class TranslatableFormRequest extends FormRequest {
                         $rule = str_replace('required', 'nullable', $rule);
                     }
                 }
-                return [$ruleKey.'.'.$locale['locale'] => array_values($rule)];
+                return [$ruleKey.'.'.$locale['locale'] => is_array($rule) ? array_values($rule) : $rule];
             });
         })->merge($standardRules);
 
