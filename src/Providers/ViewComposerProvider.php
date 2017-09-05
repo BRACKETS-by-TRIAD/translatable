@@ -14,7 +14,7 @@ class ViewComposerProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            'admin.*', TranslatableComposer::class
+            '*', TranslatableComposer::class
         );
     }
 
