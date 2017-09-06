@@ -1,7 +1,17 @@
 {
     "name": "brackets/translatable",
-    "description": "Make your content translated",
-    "keywords": ["simpleweb", "translations", "localization"],
+    "description": "Make your Eloquent models and other content translated into multiple languages",
+    "keywords": [
+        "translations",
+        "eloquent",
+        "language",
+        "locale",
+        "translate",
+        "localization",
+        "admin",
+        "cms",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "authors": [
@@ -9,11 +19,6 @@
             "name": "Pavol Perdík",
             "email": "pavol.perdik@brackets.sk",
             "homepage": "https://www.brackets.sk/en",
-            "role": "Developer"
-        },
-        {
-            "name": "David Běhal",
-            "email": "behal.david@gmail.com",
             "role": "Developer"
         }
     ],
