@@ -49,7 +49,7 @@
             ]
         },
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-laravel-58": "1.0-dev"
         }
     }
 }
