@@ -1,10 +1,13 @@
-<?php namespace Brackets\Translatable;
+<?php
 
+namespace Brackets\Translatable;
+
+use Brackets\Translatable\Facades\Translatable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
-use Brackets\Translatable\Facades\Translatable;
 
-class TranslatableFormRequest extends FormRequest {
+class TranslatableFormRequest extends FormRequest
+{
 
     /**
      * Define what locales should be required in store/update requests
@@ -22,7 +25,7 @@ class TranslatableFormRequest extends FormRequest {
     {
         $required = $this->defineRequiredLocales();
 
-        return Translatable::getLocales()->map(function($locale) use ($required) {
+        return Translatable::getLocales()->map(function ($locale) use ($required) {
             return [
                 'locale' => $locale,
                 'required' => $required->contains($locale)
@@ -34,15 +37,15 @@ class TranslatableFormRequest extends FormRequest {
     {
         $standardRules = collect($this->untranslatableRules());
 
-        $rules = $this->prepareLocalesForRules()->flatMap(function($locale){
-            return collect($this->translatableRules($locale['locale']))->mapWithKeys(function($rule, $ruleKey) use ($locale) {
+        $rules = $this->prepareLocalesForRules()->flatMap(function ($locale) {
+            return collect($this->translatableRules($locale['locale']))->mapWithKeys(function ($rule, $ruleKey) use ($locale) {
                 if (!$locale['required']) {
                     // TODO add support for rules defined via custom Rule classes
 
                     if (is_array($rule) && ($key = array_search('required', $rule)) !== false) {
                         unset($rule[$key]);
                         array_push($rule, 'nullable');
-                    } else if(is_string($rule)) {
+                    } elseif (is_string($rule)) {
                         $rule = str_replace('required', 'nullable', $rule);
                     }
                 }
@@ -53,12 +56,13 @@ class TranslatableFormRequest extends FormRequest {
         return $rules->toArray();
     }
 
-    public function untranslatableRules() {
+    public function untranslatableRules()
+    {
         return [];
     }
 
-    public function translatableRules($locale) {
+    public function translatableRules($locale)
+    {
         return [];
     }
-
 }

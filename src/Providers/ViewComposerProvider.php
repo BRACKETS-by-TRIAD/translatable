@@ -1,4 +1,6 @@
-<?php namespace Brackets\Translatable\Providers;
+<?php
+
+namespace Brackets\Translatable\Providers;
 
 use Brackets\Translatable\ViewComposers\TranslatableComposer;
 use Illuminate\Support\Facades\View;
@@ -14,7 +16,8 @@ class ViewComposerProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            '*', TranslatableComposer::class
+            '*',
+            TranslatableComposer::class
         );
     }
 

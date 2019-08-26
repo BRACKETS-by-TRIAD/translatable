@@ -14,5 +14,4 @@ class TestModel extends Model
     public $timestamps = false;
 
     public $translatable = ['translatable_name'];
-
 }

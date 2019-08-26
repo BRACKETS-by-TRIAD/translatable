@@ -1,9 +1,11 @@
-<?php namespace Brackets\Translatable;
+<?php
+
+namespace Brackets\Translatable;
 
 use Brackets\Translatable\Facades\Translatable;
-use Illuminate\Support\ServiceProvider;
-use Brackets\Translatable\Providers\ViewComposerProvider;
 use Brackets\Translatable\Providers\TranslatableProvider;
+use Brackets\Translatable\Providers\ViewComposerProvider;
+use Illuminate\Support\ServiceProvider;
 
 class TranslatableServiceProvider extends ServiceProvider
 {
@@ -32,7 +34,8 @@ class TranslatableServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../install-stubs/config/translatable.php', 'translatable'
+            __DIR__.'/../install-stubs/config/translatable.php',
+            'translatable'
         );
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();

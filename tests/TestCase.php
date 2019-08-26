@@ -32,7 +32,6 @@ abstract class TestCase extends Orchestra
         $this->testModel = TestModel::first();
         $this->testRequest = new TestRequest;
         $this->testRequestWithRequiredLocales = new TestRequestWithRequiredLocales;
-
     }
 
     /**
