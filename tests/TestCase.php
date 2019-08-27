@@ -33,7 +33,6 @@ abstract class TestCase extends Orchestra
         $this->testModel = TestModel::first();
         $this->testRequest = new TestRequest;
         $this->testRequestWithRequiredLocales = new TestRequestWithRequiredLocales;
-
     }
 
     /**
@@ -53,7 +52,7 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-        if(env('DB_CONNECTION') === 'pgsql') {
+        if (env('DB_CONNECTION') === 'pgsql') {
             $app['config']->set('database.default', 'pgsql');
             $app['config']->set('database.connections.pgsql', [
                 'driver' => 'pgsql',

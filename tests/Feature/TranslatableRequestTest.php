@@ -1,11 +1,14 @@
-<?php namespace Brackets\Translatable\Test\Feature;
+<?php
+
+namespace Brackets\Translatable\Test\Feature;
 
 use Brackets\Translatable\Test\TestCase;
 
 class TranslatableRequestTestTest extends TestCase
 {
     /** @test */
-    public function request_can_have_translatable_columns() {
+    public function request_can_have_translatable_columns()
+    {
         $this->assertEquals([
             'published_at' => ['required', 'datetime'],
             'title.en' => ['required', 'string'],
@@ -18,7 +21,8 @@ class TranslatableRequestTestTest extends TestCase
     }
 
     /** @test */
-    public function request_can_override_required_locales() {
+    public function request_can_override_required_locales()
+    {
         $this->assertEquals([
             'published_at' => ['required', 'datetime'],
             'title.en' => ['required', 'string'],
@@ -29,5 +33,4 @@ class TranslatableRequestTestTest extends TestCase
             'body.fr' => ['nullable', 'text'],
         ], $this->testRequestWithRequiredLocales->rules());
     }
-
 }

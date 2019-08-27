@@ -13,7 +13,7 @@ class Translatable
      */
     public function getLocales()
     {
-        return collect((array) Config::get('translatable.locales'))->map(function($val, $key){
+        return collect((array) Config::get('translatable.locales'))->map(function ($val, $key) {
             return is_array($val) ? $key : $val;
         });
     }

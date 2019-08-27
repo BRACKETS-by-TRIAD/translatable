@@ -15,7 +15,7 @@ trait HasTranslations
     /**
      * Get an attribute from the model.
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     public function getAttributeValue($key)
@@ -34,7 +34,8 @@ trait HasTranslations
      *
      * @param $locale
      */
-    public function setLocale($locale) {
+    public function setLocale($locale)
+    {
         $this->locale = $locale;
     }
 
@@ -58,7 +59,7 @@ trait HasTranslations
     public function toArray()
     {
         $array = parent::toArray();
-        collect($this->getTranslatableAttributes())->map(function($attribute) use (&$array) {
+        collect($this->getTranslatableAttributes())->map(function ($attribute) use (&$array) {
             $array[$attribute] = $this->getAttributeValue($attribute);
         });
         return $array;
@@ -81,12 +82,13 @@ trait HasTranslations
      *
      * By default, translations of only current locale of the model of each translated attribute is returned
      *
-     * @param  int  $options
+     * @param int $options
+     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      * @return string
      *
-     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      */
-    public function toJson($options = 0) {
+    public function toJson($options = 0)
+    {
         return parent::toJson($options);
     }
 
@@ -95,10 +97,10 @@ trait HasTranslations
      *
      * Translated columns are returned as arrays.
      *
-     * @param  int  $options
+     * @param int $options
+     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      * @return string
      *
-     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      */
     public function toJsonAllLocales($options = 0)
     {
