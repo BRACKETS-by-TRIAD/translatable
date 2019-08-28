@@ -2,6 +2,7 @@
 
 namespace Brackets\Translatable;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 
 class Translatable
@@ -9,11 +10,11 @@ class Translatable
     /**
      * Attempt to get all locales.
      *
-     * @return array
+     * @return Collection
      */
-    public function getLocales()
+    public function getLocales(): Collection
     {
-        return collect((array) Config::get('translatable.locales'))->map(function($val, $key){
+        return collect((array)Config::get('translatable.locales'))->map(static function ($val, $key) {
             return is_array($val) ? $key : $val;
         });
     }

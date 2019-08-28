@@ -22,7 +22,8 @@ class TestRequestWithRequiredLocales extends TranslatableFormRequest
         ];
     }
 
-    public function defineRequiredLocales() : Collection {
+    public function defineRequiredLocales() : Collection
+    {
         return collect(['en', 'de']);
     }
 }

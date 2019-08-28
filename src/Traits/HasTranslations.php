@@ -15,7 +15,7 @@ trait HasTranslations
     /**
      * Get an attribute from the model.
      *
-     * @param  string  $key
+     * @param string $key
      * @return mixed
      */
     public function getAttributeValue($key)
@@ -34,7 +34,8 @@ trait HasTranslations
      *
      * @param $locale
      */
-    public function setLocale($locale) {
+    public function setLocale($locale)
+    {
         $this->locale = $locale;
     }
 
@@ -45,7 +46,7 @@ trait HasTranslations
      */
     public function getLocale()
     {
-        return !is_null($this->locale) ? $this->locale : App::getLocale();
+        return $this->locale ?? App::getLocale();
     }
 
     /**
@@ -55,10 +56,10 @@ trait HasTranslations
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = parent::toArray();
-        collect($this->getTranslatableAttributes())->map(function($attribute) use (&$array) {
+        collect($this->getTranslatableAttributes())->map(function ($attribute) use (&$array) {
             $array[$attribute] = $this->getAttributeValue($attribute);
         });
         return $array;
@@ -71,7 +72,7 @@ trait HasTranslations
      *
      * @return array
      */
-    public function toArrayAllLocales()
+    public function toArrayAllLocales(): array
     {
         return parent::toArray();
     }
@@ -81,12 +82,13 @@ trait HasTranslations
      *
      * By default, translations of only current locale of the model of each translated attribute is returned
      *
-     * @param  int  $options
+     * @param int $options
+     * @throws JsonEncodingException
      * @return string
      *
-     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      */
-    public function toJson($options = 0) {
+    public function toJson($options = 0): string
+    {
         return parent::toJson($options);
     }
 
@@ -95,12 +97,12 @@ trait HasTranslations
      *
      * Translated columns are returned as arrays.
      *
-     * @param  int  $options
+     * @param int $options
+     * @throws JsonEncodingException
      * @return string
      *
-     * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      */
-    public function toJsonAllLocales($options = 0)
+    public function toJsonAllLocales($options = 0): string
     {
         $json = json_encode($this->toArrayAllLocales(), $options);
 
