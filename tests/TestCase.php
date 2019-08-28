@@ -3,6 +3,7 @@
 namespace Brackets\Translatable\Test;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -23,7 +24,7 @@ abstract class TestCase extends Orchestra
      */
     protected $testRequestWithRequiredLocales;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,12 +53,28 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
+        if(env('DB_CONNECTION') === 'pgsql') {
+            $app['config']->set('database.default', 'pgsql');
+            $app['config']->set('database.connections.pgsql', [
+                'driver' => 'pgsql',
+                'host' => 'testing',
+                'port' => '5432',
+                'database' => 'homestead',
+                'username' => 'homestead',
+                'password' => 'secret',
+                'charset' => 'utf8',
+                'prefix' => '',
+                'schema' => 'public',
+                'sslmode' => 'prefer',
+            ]);
+        } else {
+            $app['config']->set('database.default', 'sqlite');
+            $app['config']->set('database.connections.sqlite', [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+                'prefix' => '',
+            ]);
+        }
 
         $app['config']->set('app.key', '6rE9Nz59bGRbeMATftriyQjrpF7DcOQm');
 
@@ -69,7 +86,10 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase($app)
     {
-        $app['db']->connection()->getSchemaBuilder()->create('test_models', function (Blueprint $table) {
+        /** @var Builder $schema */
+        $schema = $app['db']->connection()->getSchemaBuilder();
+        $schema->dropIfExists('test_models');
+        $schema->create('test_models', function (Blueprint $table) {
             $table->increments('id');
             $table->text('translatable_name');
             $table->string('regular_name');
