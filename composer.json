@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.1.0",
         "laravel/framework": "5.5.*|5.6.*|5.7.*|5.8.*",
         "spatie/laravel-translatable": "^2.0|^3.0|^4.0"
     },
@@ -49,7 +49,7 @@
             ]
         },
         "branch-alias": {
-            "dev-laravel-58": "1.0-dev"
+            "dev-master": "1.0-dev"
         }
     }
 }
