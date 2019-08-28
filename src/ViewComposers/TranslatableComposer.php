@@ -13,7 +13,7 @@ class TranslatableComposer
      * @param View $view
      * @return void
      */
-    public function compose(View $view)
+    public function compose(View $view): void
     {
         $view->with('locales', Translatable::getLocales());
     }
